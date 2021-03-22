@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dd"
+    tools:context=".AddVisitorAcitivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="276dp"
+        android:layout_height="57dp"
+        android:text="Visitor's Details"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.637"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.123" />
+
+    <EditText
+        android:id="@+id/nameEditTextVisitor"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/input_bg"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        android:paddingLeft="30sp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/emailEditTextVisitor"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:background="@drawable/input_bg"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName|textEmailSubject"
+        android:paddingLeft="30sp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/nameEditTextVisitor"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/nameEditTextVisitor"
+        app:layout_constraintTop_toBottomOf="@+id/nameEditTextVisitor" />
+
+    <EditText
+        android:id="@+id/phoneEditTextVisitor"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:background="@drawable/input_bg"
+        android:ems="10"
+        android:hint="phone No."
+        android:inputType="textPersonName"
+        android:paddingLeft="30sp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/emailEditTextVisitor"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/emailEditTextVisitor"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditTextVisitor" />
+
+    <EditText
+        android:id="@+id/purposeEditTextVisitor"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:background="@drawable/input_bg"
+        android:ems="10"
+        android:hint="Purpose Of Visit"
+        android:inputType="textPersonName"
+        android:paddingLeft="30sp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/phoneEditTextVisitor"
+        app:layout_constraintStart_toStartOf="@+id/phoneEditTextVisitor"
+        app:layout_constraintTop_toBottomOf="@+id/phoneEditTextVisitor" />
+
+    <EditText
+        android:id="@+id/periodEditTextVisitor"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:background="@drawable/input_bg"
+        android:ems="10"
+        android:hint="Period Of Stay"
+        android:inputType="textPersonName"
+        android:paddingLeft="30sp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/purposeEditTextVisitor"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/purposeEditTextVisitor"
+        app:layout_constraintTop_toBottomOf="@+id/purposeEditTextVisitor" />
+
+    <Button
+        android:id="@+id/saveVisitorDetailsButton"
+        android:layout_width="0dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="59dp"
+        android:background="@drawable/btn_bg"
+        android:text="Save Details"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:backgroundTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/periodEditTextVisitor"
+        app:layout_constraintStart_toStartOf="@+id/periodEditTextVisitor"
+        app:layout_constraintTop_toBottomOf="@+id/periodEditTextVisitor" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
