@@ -14,15 +14,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
 
     EditText usernameEditText,emailEditText,passwordEditText,phoneEditText;
     Button registrationButton;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
     TextView signupTextView;
     ProgressBar progressBar;
 
@@ -78,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 if(password.length()<6){
-                    passwordEditText.setError("Password must be >=8 character.");
+                    passwordEditText.setError("Password must be >=6 character.");
                     return;
                 }
                 progressBar.setVisibility(View.VISIBLE);
@@ -89,8 +92,28 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(RegisterActivity.this, "User Created", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                            //send email verification
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(RegisterActivity.this, "Verification Email has been sent...", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(RegisterActivity.this, "onFailure: Email is not sent "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+
+
+
+
+
+                          //  Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
 
                         }else{
                             Toast.makeText(RegisterActivity.this, "Error "+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();

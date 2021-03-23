@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -94,6 +95,8 @@ public class AddVisitorAcitivity extends AppCompatActivity {
                reference.child(randId).setValue(visitorDetails);
 
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                
 
 
 

@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         progressBar2 = findViewById(R.id.progressBar2);
         mAuth = FirebaseAuth.getInstance();
         loginButton = findViewById(R.id.LoginButton);
-        signupTextViewLogin = findViewById(R.id.signupTextViewLogin);
+       // signupTextViewLogin = findViewById(R.id.signupTextViewLogin);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,10 +66,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this, "Logged in successfull..", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            if(mAuth.getCurrentUser().isEmailVerified()){
+                                Toast.makeText(LoginActivity.this, "Logged in successfull..", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            }
                         }else {
-                            Toast.makeText(LoginActivity.this, "Error "+task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "Error! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar2.setVisibility(View.GONE);
                         }
                     }
@@ -79,12 +81,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        signupTextViewLogin.setOnClickListener(new View.OnClickListener() {
+       /* signupTextViewLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
             }
-        });
+        });*/
 
     }
 }

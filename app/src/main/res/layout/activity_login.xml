@@ -81,24 +81,6 @@
         app:layout_constraintStart_toStartOf="@+id/passwordEditTextLogin"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLogin" />
 
-    <TextView
-        android:id="@+id/signupTextViewLogin"
-        android:layout_width="202dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="208dp"
-        android:layout_marginLeft="208dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="140dp"
-        android:layout_marginRight="140dp"
-        android:text="New User? SignUp"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.423"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LoginButton" />
-
     <ProgressBar
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyle"
@@ -106,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="172dp"
         android:layout_marginLeft="172dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="38dp"
         android:layout_marginEnd="191dp"
         android:layout_marginRight="191dp"
         android:layout_marginBottom="200dp"
@@ -115,7 +97,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupTextViewLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/LoginButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
