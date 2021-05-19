@@ -20,7 +20,7 @@ public class AddVisitorAcitivity extends AppCompatActivity {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
 
-    EditText nameEditTextVisitor,emailEditTextVisitor,phoneEditTextVisitor,purposeEditTextVisitor,periodEditTextVisitor,timeEditTextVisitor,dateEditTextVisitor;
+    EditText nameEditTextVisitor,emailEditTextVisitor,phoneEditTextVisitor,purposeEditTextVisitor,periodEditTextVisitor;
     Button saveVisitorDetailsButton;
 
 
@@ -35,12 +35,11 @@ public class AddVisitorAcitivity extends AppCompatActivity {
         nameEditTextVisitor = findViewById(R.id.nameEditTextVisitor);
         purposeEditTextVisitor = findViewById(R.id.purposeEditTextVisitor);
         periodEditTextVisitor = findViewById(R.id.periodEditTextVisitor);
-        timeEditTextVisitor = findViewById(R.id.timeEditTextVisitor);
-        dateEditTextVisitor = findViewById(R.id.dateEditTextVisitor);
 
         saveVisitorDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
 
                 rootNode = FirebaseDatabase.getInstance();
@@ -51,8 +50,6 @@ public class AddVisitorAcitivity extends AppCompatActivity {
                 String phone = phoneEditTextVisitor.getText().toString();
                 String purpose = purposeEditTextVisitor.getText().toString();
                 String period = periodEditTextVisitor.getText().toString();
-                String date = dateEditTextVisitor.getText().toString();
-                String time = timeEditTextVisitor.getText().toString();
 
 
 
@@ -82,16 +79,6 @@ public class AddVisitorAcitivity extends AppCompatActivity {
                     return;
                 }
 
-                if(TextUtils.isEmpty(date)){
-                    periodEditTextVisitor.setError("date of stay is required....");
-                    return;
-                }
-
-                if(TextUtils.isEmpty(time)){
-                    periodEditTextVisitor.setError("time of stay is required....");
-                    return;
-                }
-
               /* HashMap<String,String> map = new HashMap<>();
                 map.put("Name",name);
                 map.put("Email",email);
@@ -103,11 +90,17 @@ public class AddVisitorAcitivity extends AppCompatActivity {
                 int i = new Random().nextInt(900000) + 100000;
                 String randId = String.valueOf(i);
 
-               VisitorDetails visitorDetails = new VisitorDetails(randId,name,email,phone,purpose,period,date,time);
+               VisitorDetails visitorDetails = new VisitorDetails(randId,name,email,phone,purpose,period);
 
                reference.child(randId).setValue(visitorDetails);
 
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                
+
+
+
+
 
             }
         });

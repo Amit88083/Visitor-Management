@@ -1,20 +1,18 @@
 package com.example.vistormanagement;
 
 public class model {
-    String name,email,phone,randId,purpose,period,date,time;
+    String name,email,phone,randId,purpose,period;
 
     public model() {
     }
 
-    public model(String name, String email, String phone, String randId, String purpose, String period, String date, String time) {
+    public model(String name, String email, String phone, String randId, String purpose, String period) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.randId = randId;
         this.purpose = purpose;
         this.period = period;
-        this.date = date;
-        this.time = time;
     }
 
     public String getName() {
@@ -63,21 +61,5 @@ public class model {
 
     public void setPeriod(String period) {
         this.period = period;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 }
