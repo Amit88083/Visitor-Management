@@ -84,6 +84,11 @@ public class RegisterActivity extends AppCompatActivity {
                     passwordEditText.setError("Password must be >=6 character.");
                     return;
                 }
+
+                if(phone.length()<10 || phone.length()>10){
+                    phoneEditText.setError("Password must be of 10 character.");
+                    return;
+                }
                 progressBar.setVisibility(View.VISIBLE);
 
                 //Register the user in the firebase

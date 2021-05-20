@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/visitorbg"
-    tools:context=".AddVisitorAcitivity">
+    tools:context=".AddVisitorAcitivity"
+    android:background="@drawable/visitorbg">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="350dp"
         android:layout_height="56dp"
-        android:layout_marginStart="61dp"
-        android:layout_marginLeft="61dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginLeft="41dp"
         android:fontFamily="@font/aclonica"
         android:text="Visitor's Details"
         android:textColor="@color/black"
@@ -20,9 +26,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.123" />
+        app:layout_constraintVertical_bias="0.069" />
 
     <EditText
         android:id="@+id/nameEditTextVisitor"
@@ -124,11 +131,47 @@
         app:layout_constraintStart_toStartOf="@+id/purposeEditTextVisitor"
         app:layout_constraintTop_toBottomOf="@+id/purposeEditTextVisitor" />
 
+    <EditText
+        android:id="@+id/dateEditTextVisitor"
+        android:layout_width="307dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/input_bg"
+        android:drawableLeft="@drawable/ic_baseline_date_range_24"
+        android:drawablePadding="7dp"
+        android:ems="10"
+        android:hint="Date"
+        android:inputType="date|textPersonName"
+        android:paddingLeft="20dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/periodEditTextVisitor"
+        app:layout_constraintStart_toStartOf="@+id/periodEditTextVisitor"
+        app:layout_constraintTop_toBottomOf="@+id/periodEditTextVisitor" />
+
+    <EditText
+        android:id="@+id/timeEditTextVisitor"
+        android:layout_width="307dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/input_bg"
+        android:drawableLeft="@drawable/ic_baseline_access_time_24"
+        android:drawablePadding="7dp"
+        android:ems="10"
+        android:hint="Time"
+        android:inputType="textPersonName|time"
+        android:paddingLeft="20dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/dateEditTextVisitor"
+        app:layout_constraintStart_toStartOf="@+id/dateEditTextVisitor"
+        app:layout_constraintTop_toBottomOf="@+id/dateEditTextVisitor" />
+
     <Button
         android:id="@+id/saveVisitorDetailsButton"
         android:layout_width="0dp"
         android:layout_height="51dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/btn_bg"
         android:fontFamily="@font/amita"
         android:paddingLeft="20dp"
@@ -137,8 +180,11 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:backgroundTint="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/periodEditTextVisitor"
-        app:layout_constraintStart_toStartOf="@+id/periodEditTextVisitor"
-        app:layout_constraintTop_toBottomOf="@+id/periodEditTextVisitor" />
+        app:layout_constraintEnd_toEndOf="@+id/timeEditTextVisitor"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/timeEditTextVisitor"
+        app:layout_constraintTop_toBottomOf="@+id/timeEditTextVisitor" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -1,7 +1,5 @@
 package com.example.vistormanagement;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,74 +7,67 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.squareup.okhttp.internal.Internal.instance;
 
-//import javax.mail.Message;
-//import javax.mail.MessagingException;
-//import javax.mail.PasswordAuthentication;
-//import javax.mail.Session;
-//import javax.mail.Transport;
-//import javax.mail.internet.InternetAddress;
-//import javax.mail.internet.MimeMessage;
-//import java.util.Properties;
-//
-//
+public class requestedmyadapter extends FirestoreRecyclerAdapter<model,requestedmyadapter.myviewholder> {
 
-
-public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewholder>
-{
-    public myadapter(@NonNull FirebaseRecyclerOptions<model> options) {
+    public requestedmyadapter(@NonNull FirestoreRecyclerOptions<model> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull myviewholder myviewholder, int i, @NonNull model model) {
-        myviewholder.randId.setText(model.getRandId());
-        myviewholder.name.setText(model.getName());
-        myviewholder.phone.setText(model.getPhone());
-        myviewholder.email.setText(model.getEmail());
-        myviewholder.date.setText(model.getDate());
-        myviewholder.time.setText(model.getTime());
+    protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull model model) {
 
 
-        myviewholder.edit.setOnClickListener(new View.OnClickListener() {
+        holder.randId.setText(model.getRandId());
+        holder.name.setText(model.getName());
+        holder.phone.setText(model.getPhone());
+        holder.email.setText(model.getEmail());
+        holder.date.setText(model.getDate());
+        holder.time.setText(model.getTime());
+
+
+
+        holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                final DialogPlus dialogPlus = DialogPlus.newDialog(myviewholder.name.getContext())
+                final DialogPlus dialogPlus = DialogPlus.newDialog(holder.name.getContext())
                         .setContentHolder(new ViewHolder(R.layout.dialogcontent))
                         .setExpanded(true,800)
                         .create();
 
-                View myview = dialogPlus.getHolderView();
+                View myview1 = dialogPlus.getHolderView();
 
-                EditText name = myview.findViewById(R.id.nameUp);
-                EditText phone = myview.findViewById(R.id.phoneUp);
-                EditText purpose = myview.findViewById(R.id.purposeUp);
-                EditText period = myview.findViewById(R.id.periodUp);
-                EditText email = myview.findViewById(R.id.emailUp);
-                EditText date = myview.findViewById(R.id.dateUp);
-                EditText time = myview.findViewById(R.id.timeUp);
+                EditText name = myview1.findViewById(R.id.nameUp);
+                EditText phone = myview1.findViewById(R.id.phoneUp);
+                EditText purpose = myview1.findViewById(R.id.purposeUp);
+                EditText period = myview1.findViewById(R.id.periodUp);
+                EditText email = myview1.findViewById(R.id.emailUp);
+                EditText date = myview1.findViewById(R.id.dateUp);
+                EditText time = myview1.findViewById(R.id.timeUp);
 
 
 
-                Button submit=myview.findViewById(R.id.usubmit);
-               // Button sendEmail=myview.findViewById(R.id.sendEmail);
+                Button submit=myview1.findViewById(R.id.usubmit);
+                // Button sendEmail=myview.findViewById(R.id.sendEmail);
 
                 name.setText(model.getName());
                 phone.setText(model.getPhone());
@@ -101,8 +92,8 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
                         map.put("time",time.getText().toString());
 
 
-                        FirebaseDatabase.getInstance().getReference().child("Visitors")
-                                .child(getRef(i).getKey()).updateChildren(map)
+                        FirebaseFirestore.getInstance().collection("visitor").document("574330")
+                                .update(map)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -116,6 +107,8 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
                                     }
                                 });
 
+                       // FirebaseFirestore.getInstance().collection("visitor").document(getItem(position)).update(map)
+
 
                     }
                 });
@@ -126,31 +119,6 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
             }
         });
 
-
-        myviewholder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(myviewholder.name.getContext());
-                builder.setTitle("Delete");
-                builder.setMessage("Do you really want to delete the visitor..?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        FirebaseDatabase.getInstance().getReference().child("Visitors")
-                                .child(getRef(i).getKey()).removeValue();
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.show();
-
-
-            }
-        });
 
 
 

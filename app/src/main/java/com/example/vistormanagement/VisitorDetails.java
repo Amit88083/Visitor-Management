@@ -1,26 +1,20 @@
 package com.example.vistormanagement;
 
 public class VisitorDetails {
-        String name,email,phone,purpose,period,randId;
+        String name,email,phone,purpose,period,randId,date,time;
 
     public VisitorDetails() {
     }
 
-    public VisitorDetails( String randId,String name, String email, String phone, String purpose, String period) {
+    public VisitorDetails(String randId,String name,String email,String phone,String purpose,String period,String date,String time) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.purpose = purpose;
         this.period = period;
         this.randId = randId;
-    }
-
-    public String getRandId() {
-        return randId;
-    }
-
-    public void setRandId(String randId) {
-        this.randId = randId;
+        this.date = date;
+        this.time = time;
     }
 
     public String getName() {
@@ -63,5 +57,27 @@ public class VisitorDetails {
         this.period = period;
     }
 
+    public String getRandId() {
+        return randId;
+    }
 
+    public void setRandId(String randId) {
+        this.randId = randId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }

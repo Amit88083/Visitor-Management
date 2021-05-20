@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+//import javax.mail.Message;
+//import javax.mail.MessagingException;
+//import javax.mail.PasswordAuthentication;
+//import javax.mail.Session;
+//import javax.mail.Transport;
+//import javax.mail.internet.InternetAddress;
+//import javax.mail.internet.MimeMessage;
+//import java.util.Properties;
+//
+//
+
+
 public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewholder>
 {
     public myadapter(@NonNull FirebaseRecyclerOptions<model> options) {
@@ -33,10 +46,14 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
 
     @Override
     protected void onBindViewHolder(@NonNull myviewholder myviewholder, int i, @NonNull model model) {
+
+
         myviewholder.randId.setText(model.getRandId());
         myviewholder.name.setText(model.getName());
         myviewholder.phone.setText(model.getPhone());
         myviewholder.email.setText(model.getEmail());
+        myviewholder.date.setText(model.getDate());
+        myviewholder.time.setText(model.getTime());
 
 
         myviewholder.edit.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +62,7 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
 
                 final DialogPlus dialogPlus = DialogPlus.newDialog(myviewholder.name.getContext())
                         .setContentHolder(new ViewHolder(R.layout.dialogcontent))
-                        .setExpanded(true,700)
+                        .setExpanded(true,800)
                         .create();
 
                 View myview = dialogPlus.getHolderView();
@@ -55,20 +72,24 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
                 EditText purpose = myview.findViewById(R.id.purposeUp);
                 EditText period = myview.findViewById(R.id.periodUp);
                 EditText email = myview.findViewById(R.id.emailUp);
+                EditText date = myview.findViewById(R.id.dateUp);
+                EditText time = myview.findViewById(R.id.timeUp);
 
 
 
                 Button submit=myview.findViewById(R.id.usubmit);
+               // Button sendEmail=myview.findViewById(R.id.sendEmail);
 
                 name.setText(model.getName());
                 phone.setText(model.getPhone());
                 purpose.setText(model.getPurpose());
                 period.setText(model.getPeriod());
                 email.setText(model.getEmail());
+                date.setText(model.getDate());
+                time.setText(model.getTime());
 
 
                 dialogPlus.show();
-
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -78,7 +99,8 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
                         map.put("purpose",purpose.getText().toString());
                         map.put("period",period.getText().toString());
                         map.put("email",email.getText().toString());
-
+                        map.put("date",date.getText().toString());
+                        map.put("time",time.getText().toString());
 
 
                         FirebaseDatabase.getInstance().getReference().child("Visitors")
@@ -96,6 +118,7 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
                                     }
                                 });
 
+
                     }
                 });
 
@@ -110,8 +133,8 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(myviewholder.name.getContext());
-                builder.setTitle("Delete Panel ");
-                builder.setMessage("Delete...?");
+                builder.setTitle("Delete");
+                builder.setMessage("Do you really want to delete the visitor..?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -145,7 +168,7 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
     class myviewholder extends RecyclerView.ViewHolder{
         //String img;
         ImageView edit,delete;
-        TextView name,randId,email,phone;
+        TextView name,randId,email,phone,date,time;
 
         public myviewholder(@NonNull View itemView) {
             super(itemView);
@@ -153,6 +176,8 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
             randId = (TextView)itemView.findViewById(R.id.randIdText);
             email = (TextView)itemView.findViewById(R.id.emailtext);
             phone = (TextView)itemView.findViewById(R.id.phoneno);
+            date = (TextView)itemView.findViewById(R.id.datetext);
+            time = (TextView)itemView.findViewById(R.id.timetext);
 
 
             edit=(ImageView)itemView.findViewById(R.id.editicon);
@@ -160,6 +185,4 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
 
         }
     }
-
-
 }

@@ -1,5 +1,6 @@
 package com.example.vistormanagement;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,12 +18,16 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -38,13 +44,17 @@ import java.util.Properties;
 
 
 public class byUser extends AppCompatActivity {
-    FirebaseDatabase rootNode;
+  /*  FirebaseDatabase rootNode;
     DatabaseReference reference;
+
+    int t1Hour,t1Minute;
+    DatePickerDialog.OnDateSetListener setListener;
+*/
 
     EditText nameEditTextVisitor,emailEditTextVisitor,phoneEditTextVisitor,purposeEditTextVisitor,periodEditTextVisitor,timeEditTextVisitor,dateEditTextVisitor;
     Button saveVisitorDetailsButton;
-    int t1Hour,t1Minute;
-    DatePickerDialog.OnDateSetListener setListener;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @Override
@@ -62,9 +72,85 @@ public class byUser extends AppCompatActivity {
         dateEditTextVisitor = findViewById(R.id.dateEditTextVisitor);
 
 
+        saveVisitorDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = nameEditTextVisitor.getText().toString();
+                String email = emailEditTextVisitor.getText().toString();
+                String phone = phoneEditTextVisitor.getText().toString();
+                String purpose = purposeEditTextVisitor.getText().toString();
+                String period = periodEditTextVisitor.getText().toString();
+                String date = dateEditTextVisitor.getText().toString();
+                String time = timeEditTextVisitor.getText().toString();
+
+
+                int i = new Random().nextInt(900000) + 100000;
+                String randId = String.valueOf(i);
+
+
+                Map<String, Object> visitor = new HashMap<>();
+                visitor.put("randId",randId);
+                visitor.put("name", name);
+                visitor.put("email", email);
+                visitor.put("phone", phone);
+                visitor.put("purpose", purpose);
+                visitor.put("period", period);
+                visitor.put("date", date);
+                visitor.put("time", time);
+
+                db.collection("visitor").document(randId).set(visitor)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(byUser.this, "visitor added..", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(byUser.this, "Error!", Toast.LENGTH_SHORT).show();
+                               // Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+
+            }
+        });
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //////different part......................
+
+
+
+/*
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
@@ -173,14 +259,14 @@ public class byUser extends AppCompatActivity {
                     return;
                 }
 
-              /* HashMap<String,String> map = new HashMap<>();
-                map.put("Name",name);
-                map.put("Email",email);
-                map.put("Contact no.",phone);
-                map.put("Purpose Of Stay",purpose);
-                map.put("Period Of Stay",period);
-
-                reference.child(phone).setValue(map);*/
+//               HashMap<String,String> map = new HashMap<>();
+//                map.put("Name",name);
+//                map.put("Email",email);
+//                map.put("Contact no.",phone);
+//                map.put("Purpose Of Stay",purpose);
+//                map.put("Period Of Stay",period);
+//
+//                reference.child(phone).setValue(map);
                 int i = new Random().nextInt(900000) + 100000;
                 String randId = String.valueOf(i);
 
@@ -237,6 +323,7 @@ public class byUser extends AppCompatActivity {
         });
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+*/
 
     }
 }
