@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
     EditText passwordEditTextLogin,emailEditTextLogin;
-    TextView signupTextViewLogin,forgetPasswordTextView,byUser,showRequested;
+    TextView signupTextViewLogin,forgetPasswordTextView,byUser;
     Button loginButton;
     ProgressBar progressBar2;
     FirebaseAuth mAuth;
@@ -34,14 +35,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-       passwordEditTextLogin = findViewById(R.id.passwordEditTextLogin);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + getString(R.string.app_name)+ "</font>"));
+
+
+        passwordEditTextLogin = findViewById(R.id.passwordEditTextLogin);
         byUser = findViewById(R.id.byUser);
         emailEditTextLogin = findViewById(R.id.emailEditTextLogin);
         forgetPasswordTextView = findViewById(R.id.forgetPasswordTextView);
         progressBar2 = findViewById(R.id.progressBar2);
         mAuth = FirebaseAuth.getInstance();
         loginButton = findViewById(R.id.LoginButton);
-        showRequested = findViewById(R.id.showRequested);
+
+
 
        // signupTextViewLogin = findViewById(R.id.signupTextViewLogin);
 
@@ -75,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             if(mAuth.getCurrentUser().isEmailVerified()){
-                                Toast.makeText(LoginActivity.this, "Logged in successfull..", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Logged in successfully..", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
                             }
                         }else {
@@ -93,13 +98,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),byUser.class));
-            }
-        });
-
-        showRequested.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),requested_Visitor.class));
             }
         });
 

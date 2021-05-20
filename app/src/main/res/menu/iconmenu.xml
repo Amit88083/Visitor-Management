@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/menu_home"
-        android:icon="@drawable/ic_baseline_home"
-        android:title="Home"/>
 
     <item android:id="@+id/menu_addVisitor"
-        android:icon="@drawable/ic_baseline_person_add_alt_1_24"
+
         android:title="Add new Visitor"/>
 
     <item android:id="@+id/menu_viewVisitor"
-        android:icon="@drawable/ic_baseline_preview_24"
+
         android:title="View Visitors"/>
+
+    <item android:id="@+id/requested_visitor"
+
+        android:title="Requested Visitor list"/>
+
+    <item android:id="@+id/verify_requestedList"
+
+        android:title="Verify Requested Visitor"/>
+
 
     <item android:id="@+id/menu_addAdmin"
 
         android:title="Add new Admin"/>
+
+    <item android:id="@+id/menu_totalVisitor"
+
+        android:title="All Visitors List"/>
 
 
     <item android:id="@+id/menu_logout"

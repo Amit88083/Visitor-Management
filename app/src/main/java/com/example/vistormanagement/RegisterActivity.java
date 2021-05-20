@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +44,9 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         signupTextView = findViewById(R.id.signupTextView);
         registrationButton = findViewById(R.id.registrationButton);
+
+        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + getString(R.string.Add_Admin)+ "</font>"));
+
 
 
         if(mAuth.getCurrentUser()!=null){
@@ -85,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(phone.length()<10 || phone.length()>10){
+                if(phone.length() != 10){
                     phoneEditText.setError("Password must be of 10 character.");
                     return;
                 }
@@ -118,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                           //  Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
                         }else{
                             Toast.makeText(RegisterActivity.this, "Error "+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();

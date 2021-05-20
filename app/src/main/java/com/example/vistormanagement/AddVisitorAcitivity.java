@@ -1,5 +1,6 @@
 package com.example.vistormanagement;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -7,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -17,8 +19,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -39,7 +44,7 @@ import java.util.Properties;
 
 public class AddVisitorAcitivity extends AppCompatActivity {
     FirebaseDatabase rootNode;
-    DatabaseReference reference;
+    DatabaseReference reference,reference2;
 
     EditText nameEditTextVisitor,emailEditTextVisitor,phoneEditTextVisitor,purposeEditTextVisitor,periodEditTextVisitor,timeEditTextVisitor,dateEditTextVisitor;
     Button saveVisitorDetailsButton;
@@ -50,6 +55,9 @@ public class AddVisitorAcitivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_visitor_acitivity);
+
+        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + getString(R.string.Add_Visitor)+ "</font>"));
+
 
         saveVisitorDetailsButton = findViewById(R.id.saveVisitorDetailsButton);
         emailEditTextVisitor = findViewById(R.id.emailEditTextVisitor);
@@ -126,6 +134,7 @@ public class AddVisitorAcitivity extends AppCompatActivity {
 
                 rootNode = FirebaseDatabase.getInstance();
                 reference = rootNode.getReference("Visitors");
+                reference2 = rootNode.getReference("TotalVisitors");
 
                 String name = nameEditTextVisitor.getText().toString();
                 String email = emailEditTextVisitor.getText().toString();
@@ -189,53 +198,72 @@ public class AddVisitorAcitivity extends AppCompatActivity {
                 int i = new Random().nextInt(900000) + 100000;
                 String randId = String.valueOf(i);
 
-               VisitorDetails visitorDetails = new VisitorDetails(randId,name,email,phone,purpose,period,date,time);
-
-               reference.child(randId).setValue(visitorDetails);
-
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
 
+                DatabaseReference ref=FirebaseDatabase.getInstance().getReference("TotalVisitors");
+                ref.orderByChild("randId").equalTo(randId).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if(snapshot.exists()){
+                            Toast.makeText(AddVisitorAcitivity.this, " user id exists....", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else{
+
+                            VisitorDetails visitorDetails = new VisitorDetails(randId,name,email,phone,purpose,period,date,time);
+
+                            reference.child(randId).setValue(visitorDetails);
+                            reference2.child(randId).setValue(visitorDetails);
+
+
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
 
 
 
+                            //email sending
+                            final String username = "visitormanagementdepartment@gmail.com";
+                            final String password = "Qwerty@123";
 
-                //email sending
-                final String username = "visitormanagementdepartment@gmail.com";
-                final String password = "Qwerty@123";
+                            //  String messageToSend = nameEditTextVisitor.getText().toString();
+                            Properties props = new Properties();
+                            props.put("mail.smtp.auth","true");
+                            props.put("mail.smtp.starttls.enable","true");
+                            props.put("mail.smtp.host","smtp.gmail.com");
+                            props.put("mail.smtp.port","587");
 
-              //  String messageToSend = nameEditTextVisitor.getText().toString();
-                Properties props = new Properties();
-                props.put("mail.smtp.auth","true");
-                props.put("mail.smtp.starttls.enable","true");
-                props.put("mail.smtp.host","smtp.gmail.com");
-                props.put("mail.smtp.port","587");
+                            Session session = Session.getInstance(props,
+                                    new javax.mail.Authenticator(){
+                                        @Override
+                                        protected PasswordAuthentication getPasswordAuthentication() {
+                                            return new PasswordAuthentication(username,password);
+                                        }
+                                    });
 
-                Session session = Session.getInstance(props,
-                        new javax.mail.Authenticator(){
-                            @Override
-                            protected PasswordAuthentication getPasswordAuthentication() {
-                                return new PasswordAuthentication(username,password);
+                            try {
+                                Message message = new MimeMessage(session);
+                                message.setFrom(new InternetAddress(username));
+                                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailEditTextVisitor.getText().toString()));
+                                message.setSubject("Visitor e-pass IIITA");
+                                message.setText("Welcome "+name+" here is your visitor e-pass"+"\n\n"+"ID  : "+randId+"\n\n"+"Phone no.         : "+phone+"\n"+
+                                        "Purpose:           : "+purpose+"\n"+"Date                   : "+date+"\n"+"Time                  : "+time+"\n"+"period of Stay  : "+period+"\n\n\n\n"+
+                                        "Please follow the institute's rules and regulation strictly."+"\n"+"Thank you."+"\n\n\n"+"Visitor Management department"+"\n"+"Indian Institute of Information Technology,Allahabad"+
+                                        "\n"+"Deoghat,Jhalwa,Prayagraj(U.P)-211015.");
+                                Transport.send(message);
+                                Toast.makeText(AddVisitorAcitivity.this, "sending e-pass..", Toast.LENGTH_SHORT).show();
+                            }catch (MessagingException e)
+                            {
+                                throw new RuntimeException();
                             }
-                        });
+                        }
+                    }
 
-                try {
-                    Message message = new MimeMessage(session);
-                    message.setFrom(new InternetAddress(username));
-                    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailEditTextVisitor.getText().toString()));
-                    message.setSubject("Visitor e-pass IIITA");
-                    message.setText("Welcome "+name+" here is your visitor e-pass"+"\n\n"+"ID  : "+randId+"\n\n"+"Phone no.         : "+phone+"\n"+
-                            "Purpose:           : "+purpose+"\n"+"Date                   : "+date+"\n"+"Time                  : "+time+"\n"+"period of Stay  : "+period+"\n\n\n\n"+
-                            "Please follow the institute's rules and regulation strictly."+"\n"+"Thank you."+"\n\n\n"+"Visitor Management department"+"\n"+"Indian Institute of Information Technology,Allahabad"+
-                            "\n"+"Deoghat,Jhalwa,Prayagraj(U.P)-211015.");
-                    Transport.send(message);
-                    Toast.makeText(AddVisitorAcitivity.this, "sending e-pass..", Toast.LENGTH_SHORT).show();
-                }catch (MessagingException e)
-                {
-                    throw new RuntimeException();
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
+                    }
+                });
 
             }
         });

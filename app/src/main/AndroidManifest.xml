@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VistorManagement">
+        <activity android:name=".ViewTotalVisitor"></activity>
+        <activity android:name=".saveRequestedVisitor" />
         <activity android:name=".requested_Visitor" />
         <activity android:name=".byUser" />
         <activity android:name=".viewVisitorActivity" />

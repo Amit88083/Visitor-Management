@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -29,6 +30,7 @@ public class viewVisitorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_visitor);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + getString(R.string.Visitor_List)+ "</font>"));
 
         recview = findViewById(R.id.recview);
         recview.setLayoutManager(new LinearLayoutManager(this));
@@ -60,6 +62,7 @@ public class viewVisitorActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu,menu);
         MenuItem item = menu.findItem(R.id.search);
         SearchView searchView = (SearchView)item.getActionView();
+
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

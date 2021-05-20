@@ -8,38 +8,19 @@
     android:background="@drawable/randview"
     tools:context=".AddVisitorAcitivity">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="350dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="41dp"
-            android:layout_marginLeft="41dp"
-            android:fontFamily="@font/aclonica"
-            android:text="Fill your details"
-            android:textColor="@color/black"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.069" />
-
         <EditText
-            android:id="@+id/nameEditTextVisitor"
+            android:id="@+id/nameEditTextVisitor1"
             android:layout_width="307dp"
             android:layout_height="46dp"
             android:layout_marginStart="50dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="16dp"
 
+            android:layout_marginTop="23dp"
             android:layout_marginEnd="50dp"
             android:layout_marginRight="50dp"
             android:background="@drawable/input_bg"
@@ -53,10 +34,10 @@
             android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/searchRequestedBox" />
 
         <EditText
-            android:id="@+id/emailEditTextVisitor"
+            android:id="@+id/emailEditTextVisitor1"
             android:layout_width="307dp"
             android:layout_height="46dp"
             android:layout_marginTop="10dp"
@@ -70,13 +51,13 @@
             android:paddingLeft="20dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/nameEditTextVisitor"
+            app:layout_constraintEnd_toEndOf="@+id/nameEditTextVisitor1"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/nameEditTextVisitor"
-            app:layout_constraintTop_toBottomOf="@+id/nameEditTextVisitor" />
+            app:layout_constraintStart_toStartOf="@+id/nameEditTextVisitor1"
+            app:layout_constraintTop_toBottomOf="@+id/nameEditTextVisitor1" />
 
         <EditText
-            android:id="@+id/phoneEditTextVisitor"
+            android:id="@+id/phoneEditTextVisitor1"
             android:layout_width="307dp"
             android:layout_height="46dp"
             android:layout_marginTop="10dp"
@@ -89,13 +70,13 @@
             android:paddingLeft="20dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/emailEditTextVisitor"
+            app:layout_constraintEnd_toEndOf="@+id/emailEditTextVisitor1"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/emailEditTextVisitor"
-            app:layout_constraintTop_toBottomOf="@+id/emailEditTextVisitor" />
+            app:layout_constraintStart_toStartOf="@+id/emailEditTextVisitor1"
+            app:layout_constraintTop_toBottomOf="@+id/emailEditTextVisitor1" />
 
         <EditText
-            android:id="@+id/purposeEditTextVisitor"
+            android:id="@+id/purposeEditTextVisitor1"
             android:layout_width="307dp"
             android:layout_height="46dp"
             android:layout_marginTop="10dp"
@@ -109,12 +90,12 @@
             android:paddingLeft="20dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/phoneEditTextVisitor"
-            app:layout_constraintStart_toStartOf="@+id/phoneEditTextVisitor"
-            app:layout_constraintTop_toBottomOf="@+id/phoneEditTextVisitor" />
+            app:layout_constraintEnd_toEndOf="@+id/phoneEditTextVisitor1"
+            app:layout_constraintStart_toStartOf="@+id/phoneEditTextVisitor1"
+            app:layout_constraintTop_toBottomOf="@+id/phoneEditTextVisitor1" />
 
         <EditText
-            android:id="@+id/periodEditTextVisitor"
+            android:id="@+id/periodEditTextVisitor1"
             android:layout_width="307dp"
             android:layout_height="46dp"
             android:layout_marginTop="10dp"
@@ -127,13 +108,13 @@
             android:paddingLeft="20dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/purposeEditTextVisitor"
+            app:layout_constraintEnd_toEndOf="@+id/purposeEditTextVisitor1"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/purposeEditTextVisitor"
-            app:layout_constraintTop_toBottomOf="@+id/purposeEditTextVisitor" />
+            app:layout_constraintStart_toStartOf="@+id/purposeEditTextVisitor1"
+            app:layout_constraintTop_toBottomOf="@+id/purposeEditTextVisitor1" />
 
         <EditText
-            android:id="@+id/dateEditTextVisitor"
+            android:id="@+id/dateEditTextVisitor1"
             android:layout_width="307dp"
             android:layout_height="46dp"
             android:layout_marginTop="10dp"
@@ -146,12 +127,12 @@
             android:paddingLeft="20dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/periodEditTextVisitor"
-            app:layout_constraintStart_toStartOf="@+id/periodEditTextVisitor"
-            app:layout_constraintTop_toBottomOf="@+id/periodEditTextVisitor" />
+            app:layout_constraintEnd_toEndOf="@+id/periodEditTextVisitor1"
+            app:layout_constraintStart_toStartOf="@+id/periodEditTextVisitor1"
+            app:layout_constraintTop_toBottomOf="@+id/periodEditTextVisitor1" />
 
         <EditText
-            android:id="@+id/timeEditTextVisitor"
+            android:id="@+id/timeEditTextVisitor1"
             android:layout_width="307dp"
             android:layout_height="46dp"
             android:layout_marginTop="10dp"
@@ -164,27 +145,60 @@
             android:paddingLeft="20dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/dateEditTextVisitor"
-            app:layout_constraintStart_toStartOf="@+id/dateEditTextVisitor"
-            app:layout_constraintTop_toBottomOf="@+id/dateEditTextVisitor" />
+            app:layout_constraintEnd_toEndOf="@+id/dateEditTextVisitor1"
+            app:layout_constraintStart_toStartOf="@+id/dateEditTextVisitor1"
+            app:layout_constraintTop_toBottomOf="@+id/dateEditTextVisitor1" />
 
         <Button
-            android:id="@+id/saveVisitorDetailsButton"
+            android:id="@+id/saveVisitorDetailsButton1"
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/btn_bg"
             android:fontFamily="@font/amita"
             android:paddingLeft="20dp"
-            android:text="request e-pass"
+            android:text="save details"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:backgroundTint="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="@+id/timeEditTextVisitor"
+            app:layout_constraintEnd_toEndOf="@+id/timeEditTextVisitor1"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/timeEditTextVisitor"
-            app:layout_constraintTop_toBottomOf="@+id/timeEditTextVisitor" />
+            app:layout_constraintStart_toStartOf="@+id/timeEditTextVisitor1"
+            app:layout_constraintTop_toBottomOf="@+id/timeEditTextVisitor1" />
+
+        <EditText
+            android:id="@+id/searchRequestedBox"
+            android:layout_width="167dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginLeft="52dp"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:hint="Id"
+            android:inputType="textPersonName"
+            android:textColorHint="#3E3838"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/requestedSearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="43dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/btn_bg"
+            android:fontFamily="@font/amita"
+            android:text="Search"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/searchRequestedBox"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

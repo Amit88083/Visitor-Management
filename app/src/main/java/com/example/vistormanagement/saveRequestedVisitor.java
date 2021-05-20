@@ -16,28 +16,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 
-
-
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -45,89 +35,105 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import java.util.Calendar;
 import java.util.Properties;
+import java.util.Random;
 
-
-public class byUser extends AppCompatActivity {
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
-
-    int t1Hour,t1Minute;
-    DatePickerDialog.OnDateSetListener setListener;
-
+public class saveRequestedVisitor extends AppCompatActivity {
 
     EditText nameEditTextVisitor,emailEditTextVisitor,phoneEditTextVisitor,purposeEditTextVisitor,periodEditTextVisitor,timeEditTextVisitor,dateEditTextVisitor;
-    Button saveVisitorDetailsButton;
+    Button saveVisitorDetailsButton,requestedSearchButton;
+    TextView searchRequestedBox;
+    int t1Hour,t1Minute;
 
-   // private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseDatabase rootNode;
+    DatabaseReference reference1,reference3;
 
+   // DatabaseReference mRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_by_user);
+        setContentView(R.layout.activity_save_requested_visitor);
+
+        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + getString(R.string.requested_Verify)+ "</font>"));
 
 
-        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + getString(R.string.requested_title)+ "</font>"));
-        //setTitle("hello");
-        saveVisitorDetailsButton = findViewById(R.id.saveVisitorDetailsButton);
-        emailEditTextVisitor = findViewById(R.id.emailEditTextVisitor);
-        phoneEditTextVisitor = findViewById(R.id.phoneEditTextVisitor);
-        nameEditTextVisitor = findViewById(R.id.nameEditTextVisitor);
-        purposeEditTextVisitor = findViewById(R.id.purposeEditTextVisitor);
-        periodEditTextVisitor = findViewById(R.id.periodEditTextVisitor);
-        timeEditTextVisitor = findViewById(R.id.timeEditTextVisitor);
-        dateEditTextVisitor = findViewById(R.id.dateEditTextVisitor);
+        saveVisitorDetailsButton = findViewById(R.id.saveVisitorDetailsButton1);
+        emailEditTextVisitor = findViewById(R.id.emailEditTextVisitor1);
+        phoneEditTextVisitor = findViewById(R.id.phoneEditTextVisitor1);
+        nameEditTextVisitor = findViewById(R.id.nameEditTextVisitor1);
+        purposeEditTextVisitor = findViewById(R.id.purposeEditTextVisitor1);
+        periodEditTextVisitor = findViewById(R.id.periodEditTextVisitor1);
+        timeEditTextVisitor = findViewById(R.id.timeEditTextVisitor1);
+        dateEditTextVisitor = findViewById(R.id.dateEditTextVisitor1);
+        searchRequestedBox = findViewById(R.id.searchRequestedBox);
+        requestedSearchButton = findViewById(R.id.requestedSearchButton);
 
-/*
-        saveVisitorDetailsButton.setOnClickListener(new View.OnClickListener() {
+
+
+        requestedSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = nameEditTextVisitor.getText().toString();
-                String email = emailEditTextVisitor.getText().toString();
-                String phone = phoneEditTextVisitor.getText().toString();
-                String purpose = purposeEditTextVisitor.getText().toString();
-                String period = periodEditTextVisitor.getText().toString();
-                String date = dateEditTextVisitor.getText().toString();
-                String time = timeEditTextVisitor.getText().toString();
+
+                String id = searchRequestedBox.getText().toString();
+
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("RequestedVisitor").child(id);
+
+                DatabaseReference ref=FirebaseDatabase.getInstance().getReference("RequestedVisitor");
+                ref.orderByChild("randId").equalTo(id).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+
+                            ValueEventListener valueEventListener = new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    String date = snapshot.child("date").getValue().toString();
+                                    String email = snapshot.child("email").getValue().toString();
+                                    String name = snapshot.child("name").getValue().toString();
+                                    String period = snapshot.child("period").getValue().toString();
+                                    String phone = snapshot.child("phone").getValue().toString();
+                                    String purpose = snapshot.child("purpose").getValue().toString();
+                                    String randId = snapshot.child("randId").getValue().toString();
+                                    String time = snapshot.child("time").getValue().toString();
 
 
-                int i = new Random().nextInt(900000) + 100000;
-                String randId = String.valueOf(i);
+
+                                    dateEditTextVisitor.setText(date);
+                                    emailEditTextVisitor.setText(email);
+                                    nameEditTextVisitor.setText(name);
+                                    periodEditTextVisitor.setText(period);
+                                    phoneEditTextVisitor.setText(phone);
+                                    purposeEditTextVisitor.setText(purpose);
+                                    timeEditTextVisitor.setText(time);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            };
+
+                            reference.addListenerForSingleValueEvent(valueEventListener);
 
 
-                Map<String, Object> visitor = new HashMap<>();
-                visitor.put("randId",randId);
-                visitor.put("name", name);
-                visitor.put("email", email);
-                visitor.put("phone", phone);
-                visitor.put("purpose", purpose);
-                visitor.put("period", period);
-                visitor.put("date", date);
-                visitor.put("time", time);
 
-                db.collection("visitor").document().set(visitor)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(byUser.this, "visitor added..", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(byUser.this, "Error!", Toast.LENGTH_SHORT).show();
-                               // Log.w(TAG, "Error adding document", e);
-                            }
-                        });
+                        }else {
+                            Toast.makeText(saveRequestedVisitor.this, "wrong id number...", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
             }
         });
-
-
-*/
-
-        //////different part......................
 
 
 
@@ -142,7 +148,7 @@ public class byUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        byUser.this, new DatePickerDialog.OnDateSetListener() {
+                        saveRequestedVisitor.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         month = month+1;
@@ -164,7 +170,7 @@ public class byUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        byUser.this,
+                        saveRequestedVisitor.this,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -181,13 +187,15 @@ public class byUser extends AppCompatActivity {
             }
         });
 
+
+
+
         saveVisitorDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 rootNode = FirebaseDatabase.getInstance();
-                reference = rootNode.getReference("RequestedVisitor");
+                reference1 = rootNode.getReference("Visitors");
+                reference3 = rootNode.getReference("TotalVisitors");
 
                 String name = nameEditTextVisitor.getText().toString();
                 String email = emailEditTextVisitor.getText().toString();
@@ -197,8 +205,13 @@ public class byUser extends AppCompatActivity {
                 String date = dateEditTextVisitor.getText().toString();
                 String time = timeEditTextVisitor.getText().toString();
 
+                String randId = searchRequestedBox.getText().toString();
 
 
+                if(TextUtils.isEmpty(randId)){
+                    nameEditTextVisitor.setError("RandId is required....");
+                    return;
+                }
 
                 if(TextUtils.isEmpty(name)){
                     nameEditTextVisitor.setError("Username is required....");
@@ -240,37 +253,31 @@ public class byUser extends AppCompatActivity {
                     return;
                 }
 
-//               HashMap<String,String> map = new HashMap<>();
-//                map.put("Name",name);
-//                map.put("Email",email);
-//                map.put("Contact no.",phone);
-//                map.put("Purpose Of Stay",purpose);
-//                map.put("Period Of Stay",period);
-//
-//                reference.child(phone).setValue(map);
-                int i = new Random().nextInt(900000) + 100000;
-                String randId = String.valueOf(i);
+                if(randId.length() != 6){
+                    phoneEditTextVisitor.setError("Id must be of 6 character.");
+                    return;
+                }
 
 
-
-                DatabaseReference ref=FirebaseDatabase.getInstance().getReference("RequestedVisitor");
+                DatabaseReference ref=FirebaseDatabase.getInstance().getReference("TotalVisitors");
                 ref.orderByChild("randId").equalTo(randId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
-                            Toast.makeText(byUser.this, " user id exists....", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(saveRequestedVisitor.this, " user id exists....", Toast.LENGTH_SHORT).show();
 
                         }
-                        else{
+                        else {
                             VisitorDetails visitorDetails = new VisitorDetails(randId,name,email,phone,purpose,period,date,time);
 
-                            reference.child(randId).setValue(visitorDetails);
-
+                            reference1.child(randId).setValue(visitorDetails);
+                            reference3.child(randId).setValue(visitorDetails);
 
                             //email sending
                             final String username = "visitormanagementdepartment@gmail.com";
                             final String password = "Qwerty@123";
 
+                            //  String messageToSend = nameEditTextVisitor.getText().toString();
                             Properties props = new Properties();
                             props.put("mail.smtp.auth","true");
                             props.put("mail.smtp.starttls.enable","true");
@@ -278,7 +285,7 @@ public class byUser extends AppCompatActivity {
                             props.put("mail.smtp.port","587");
 
                             Session session = Session.getInstance(props,
-                                    new javax.mail.Authenticator(){
+                                    new Authenticator(){
                                         @Override
                                         protected PasswordAuthentication getPasswordAuthentication() {
                                             return new PasswordAuthentication(username,password);
@@ -289,34 +296,65 @@ public class byUser extends AppCompatActivity {
                                 Message message = new MimeMessage(session);
                                 message.setFrom(new InternetAddress(username));
                                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailEditTextVisitor.getText().toString()));
-                                message.setSubject("Visitor e-pass IIITA (confirmation-Pending)");
-                                message.setText("Welcome "+name+" here is your visitor e-pass Id and Phone no."+"\n\n"+"ID                 : "+randId+"\n"+"Phone no.   : "+phone+"\n\n"+
-                                        "At the time of entry you have to verify your e-visitor pass, then after you will allow in the campus.\nPlease make sure entering in the campus, without confirmation of e-pass is violation of rules and regulation of institute."+"\n\n"+"Thank you."+"\n\n\n"+"Visitor Management department"+"\n"+"Indian Institute of Information Technology,Allahabad"+
+                                message.setSubject("Visitor e-pass IIITA");
+                                message.setText("Welcome "+name+" here is your visitor e-pass"+"\n\n"+"ID  : "+randId+"\n\n"+"Phone no.         : "+phone+"\n"+
+                                        "Purpose:           : "+purpose+"\n"+"Date                   : "+date+"\n"+"Time                  : "+time+"\n"+"period of Stay  : "+period+"\n\n\n\n"+
+                                        "Please follow the institute's rules and regulation strictly."+"\n"+"Thank you."+"\n\n\n"+"Visitor Management department"+"\n"+"Indian Institute of Information Technology,Allahabad"+
                                         "\n"+"Deoghat,Jhalwa,Prayagraj(U.P)-211015.");
                                 Transport.send(message);
-                                Toast.makeText(byUser.this, "sending e-pass..", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(saveRequestedVisitor.this, "sending e-pass..", Toast.LENGTH_SHORT).show();
                             }catch (MessagingException e)
                             {
                                 throw new RuntimeException();
                             }
 
+                            FirebaseDatabase.getInstance().getReference().child("RequestedVisitor").child(randId).removeValue();
 
-                            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+
+
                         }
-
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
+
+
+
+
                     }
                 });
+
+              /* HashMap<String,String> map = new HashMap<>();
+                map.put("Name",name);
+                map.put("Email",email);
+                map.put("Contact no.",phone);
+                map.put("Purpose Of Stay",purpose);
+                map.put("Period Of Stay",period);
+
+                reference.child(phone).setValue(map);*/
+//                int i = new Random().nextInt(900000) + 100000;
+//                String randId = String.valueOf(i);
+
+
+
+          /*      VisitorDetails visitorDetails = new VisitorDetails(randId,name,email,phone,purpose,period,date,time);
+
+                reference1.child(randId).setValue(visitorDetails);
+
+
+*/
+
 
 
             }
         });
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
 
 
     }

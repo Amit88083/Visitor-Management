@@ -2,6 +2,7 @@ package com.example.vistormanagement;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,9 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
@@ -25,17 +29,6 @@ import com.orhanobut.dialogplus.ViewHolder;
 import java.util.HashMap;
 import java.util.Map;
 
-
-//import javax.mail.Message;
-//import javax.mail.MessagingException;
-//import javax.mail.PasswordAuthentication;
-//import javax.mail.Session;
-//import javax.mail.Transport;
-//import javax.mail.internet.InternetAddress;
-//import javax.mail.internet.MimeMessage;
-//import java.util.Properties;
-//
-//
 
 
 public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewholder>
@@ -60,6 +53,8 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
             @Override
             public void onClick(View v) {
 
+
+
                 final DialogPlus dialogPlus = DialogPlus.newDialog(myviewholder.name.getContext())
                         .setContentHolder(new ViewHolder(R.layout.dialogcontent))
                         .setExpanded(true,800)
@@ -78,7 +73,7 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
 
 
                 Button submit=myview.findViewById(R.id.usubmit);
-               // Button sendEmail=myview.findViewById(R.id.sendEmail);
+                // Button sendEmail=myview.findViewById(R.id.sendEmail);
 
                 name.setText(model.getName());
                 phone.setText(model.getPhone());
@@ -87,6 +82,10 @@ public class myadapter extends FirebaseRecyclerAdapter<model,myadapter.myviewhol
                 email.setText(model.getEmail());
                 date.setText(model.getDate());
                 time.setText(model.getTime());
+
+
+
+
 
 
                 dialogPlus.show();

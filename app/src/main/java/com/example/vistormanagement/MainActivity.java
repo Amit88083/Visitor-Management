@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.iconmenu,menu);
 
+        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + getString(R.string.app_name)+ "</font>"));
+
+
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_home_244);// set drawable icon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -55,22 +58,19 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId())
         {
-            case R.id.menu_home:
-                Toast.makeText(this, "home panel", Toast.LENGTH_SHORT).show();
-                return true;
 
             case R.id.menu_addVisitor:
-                Toast.makeText(this, "add Visitor panel", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "provide details to add visitors", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(),AddVisitorAcitivity.class));
                 return true;
 
             case R.id.menu_viewVisitor:
-                Toast.makeText(this, "view Visitor panel", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "visitors list", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(),viewVisitorActivity.class));
                 return true;
 
             case R.id.menu_logout:
-                Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "signed Out", Toast.LENGTH_SHORT).show();
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getApplicationContext(),LoginActivity.class));
                 finish();
@@ -80,6 +80,21 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
                 finish();
+                return true;
+
+            case R.id.requested_visitor:
+                Toast.makeText(this, "Requested Visitor List", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(),requested_Visitor.class));
+                return true;
+
+            case R.id.verify_requestedList:
+                Toast.makeText(this, "Enter Random Id, to Verify Visitor", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplicationContext(),saveRequestedVisitor.class));
+                return true;
+
+            case R.id.menu_totalVisitor:
+                Toast.makeText(this, "Visitors visit campus till now..", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(),ViewTotalVisitor.class));
                 return true;
 
 
@@ -122,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         searchDeleteImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),viewVisitorActivity.class));
+                startActivity(new Intent(getApplicationContext(),saveRequestedVisitor.class));
             }
         });
 

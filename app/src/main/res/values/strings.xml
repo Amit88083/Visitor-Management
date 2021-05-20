@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Visitor Management</string>
+    <string name="requested_title">Request For E-Pass</string>
+    <string name="requested_List">Requested Visitor List</string>
+    <string name="requested_Verify">Verify Request</string>
+    <string name="Add_Visitor">Add new Visitor</string>
+    <string name="Visitor_List">Visitor List</string>
+    <string name="Add_Admin">Add new Admin</string>
+    <string name="Total_Visitor">Total Visitor List</string>
+
 
 </resources>

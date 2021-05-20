@@ -12,54 +12,38 @@ import android.widget.SearchView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+public class ViewTotalVisitor extends AppCompatActivity {
 
-public class requested_Visitor extends AppCompatActivity {
-
-    RecyclerView recview1;
-    requestedmyadapter requestedmyadapter1;
+    RecyclerView recview2;
+    ToatVisitorAdapter Totaladapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_requested__visitor);
+        setContentView(R.layout.activity_view_total_visitor);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + getString(R.string.Total_Visitor)+ "</font>"));
 
-        getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + getString(R.string.requested_List)+ "</font>"));
-
-
-        recview1 = (RecyclerView)findViewById(R.id.recview1);
-        recview1.setLayoutManager(new LinearLayoutManager(this));
-
-  /*      FirestoreRecyclerOptions<model> options = new FirestoreRecyclerOptions.Builder<model>()
-                .setQuery(FirebaseFirestore.getInstance()
-                        .collection("visitor"), model.class)
-                .build();
-
-
-        */
+        recview2 = findViewById(R.id.recview2);
+        recview2.setLayoutManager(new LinearLayoutManager(this));
 
         FirebaseRecyclerOptions<model> options =
                 new FirebaseRecyclerOptions.Builder<model>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("RequestedVisitor"), model.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("TotalVisitors"), model.class)
                         .build();
 
-
-        requestedmyadapter1 = new requestedmyadapter(options);
-        recview1.setAdapter(requestedmyadapter1);
+        Totaladapter = new ToatVisitorAdapter(options);
+        recview2.setAdapter(Totaladapter);
 
     }
-
     @Override
     protected void onStart() {
         super.onStart();
-        requestedmyadapter1.startListening();
+        Totaladapter.startListening();
     }
-
     @Override
     protected void onStop() {
         super.onStop();
-        requestedmyadapter1.stopListening();
+        Totaladapter.stopListening();
     }
 
 
@@ -69,6 +53,7 @@ public class requested_Visitor extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu,menu);
         MenuItem item = menu.findItem(R.id.search);
         SearchView searchView = (SearchView)item.getActionView();
+
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -94,13 +79,14 @@ public class requested_Visitor extends AppCompatActivity {
     private void processearch(String newText) {
         FirebaseRecyclerOptions<model> options =
                 new FirebaseRecyclerOptions.Builder<model>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("RequestedVisitor").orderByChild("email").startAt(newText).endAt(newText+"\uf8ff"), model.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("TotalVisitors").orderByChild("date").startAt(newText).endAt(newText+"\uf8ff"), model.class)
                         .build();
 
-        requestedmyadapter1 = new requestedmyadapter(options);
-        requestedmyadapter1.startListening();
-        recview1.setAdapter(requestedmyadapter1);
+        Totaladapter = new ToatVisitorAdapter(options);
+        Totaladapter.startListening();
+        recview2.setAdapter(Totaladapter);
 
 
     }
+
 }
